@@ -1,5 +1,5 @@
-import React from 'react';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare } from "lucide-react"
+import React from "react"
 
 export const Header: React.FC = () => {
   return (
@@ -11,12 +11,24 @@ export const Header: React.FC = () => {
         </div>
         <nav>
           <ul className="flex space-x-4">
-            <li><a href="#" className="hover:underline">홈</a></li>
-            <li><a href="#" className="hover:underline">대시보드</a></li>
-            <li><a href="#" className="hover:underline">설정</a></li>
+            <li>
+              <a href="#" className="hover:underline">
+                홈
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">
+                대시보드
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">
+                설정
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
     </header>
-  );
-};
+  )
+}

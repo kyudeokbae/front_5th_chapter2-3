@@ -5,6 +5,8 @@ import reactRefresh from "eslint-plugin-react-refresh"
 import tseslint from "typescript-eslint"
 import path from "path"
 import { fileURLToPath } from "url"
+import conartiFsdPlugin from "@conarti/eslint-plugin-feature-sliced"
+import simpleImportSort from "eslint-plugin-simple-import-sort"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -24,10 +26,31 @@ export default tseslint.config(
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
+      "@conarti/feature-sliced": conartiFsdPlugin,
+      "simple-import-sort": simpleImportSort,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      "@conarti/feature-sliced/layers-slices": "error",
+      "@conarti/feature-sliced/absolute-relative": "error",
+      "@conarti/feature-sliced/public-api": "error",
+      "simple-import-sort/imports": [
+        "error",
+        {
+          groups: [
+            ["^\\u0000", "^@?\\w"],
+            ["^@app"],
+            ["^@pages"],
+            ["^@widgets"],
+            ["^@features"],
+            ["^@entities"],
+            ["^@shared"],
+            ["^\\."],
+          ],
+        },
+      ],
+      "simple-import-sort/exports": "error",
     },
   },
   {
