@@ -2,6 +2,9 @@ import { Edit2, MessageSquare, Plus, Search, ThumbsDown, ThumbsUp, Trash2 } from
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
+import { PostTable } from "@widgets/post-table"
+
+import { highlightText } from "@shared/lib"
 import {
   Button,
   Card,
@@ -328,101 +331,6 @@ const PostsManager = () => {
     setSelectedTag(params.get("tag") || "")
   }, [location.search])
 
-  // 하이라이트 함수 추가
-  const highlightText = (text: string, highlight: string) => {
-    if (!text) return null
-    if (!highlight.trim()) {
-      return <span>{text}</span>
-    }
-    const regex = new RegExp(`(${highlight})`, "gi")
-    const parts = text.split(regex)
-    return (
-      <span>
-        {parts.map((part, i) => (regex.test(part) ? <mark key={i}>{part}</mark> : <span key={i}>{part}</span>))}
-      </span>
-    )
-  }
-
-  // 게시물 테이블 렌더링
-  const renderPostTable = () => (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[50px]">ID</TableHead>
-          <TableHead>제목</TableHead>
-          <TableHead className="w-[150px]">작성자</TableHead>
-          <TableHead className="w-[150px]">반응</TableHead>
-          <TableHead className="w-[150px]">작업</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {posts.map((post) => (
-          <TableRow key={post.id}>
-            <TableCell>{post.id}</TableCell>
-            <TableCell>
-              <div className="space-y-1">
-                <div>{highlightText(post.title, searchQuery)}</div>
-
-                <div className="flex flex-wrap gap-1">
-                  {post.tags?.map((tag) => (
-                    <span
-                      key={tag}
-                      className={`px-1 text-[9px] font-semibold rounded-[4px] cursor-pointer ${
-                        selectedTag === tag
-                          ? "text-white bg-blue-500 hover:bg-blue-600"
-                          : "text-blue-800 bg-blue-100 hover:bg-blue-200"
-                      }`}
-                      onClick={() => {
-                        setSelectedTag(tag)
-                        updateURL()
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="flex items-center space-x-2 cursor-pointer" onClick={() => openUserModal(post.author)}>
-                <img src={post.author?.image} alt={post.author?.username} className="w-8 h-8 rounded-full" />
-                <span>{post.author?.username}</span>
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="flex items-center gap-2">
-                <ThumbsUp className="w-4 h-4" />
-                <span>{post.reactions?.likes || 0}</span>
-                <ThumbsDown className="w-4 h-4" />
-                <span>{post.reactions?.dislikes || 0}</span>
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="flex items-center gap-2">
-                <Button variant="ghost" size="sm" onClick={() => openPostDetail(post)}>
-                  <MessageSquare className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setSelectedPost(post)
-                    setShowEditDialog(true)
-                  }}
-                >
-                  <Edit2 className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="sm" onClick={() => deletePost(post.id)}>
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  )
-
   // 댓글 렌더링
   const renderComments = (postId) => (
     <div className="mt-2">
@@ -541,7 +449,22 @@ const PostsManager = () => {
           </div>
 
           {/* 게시물 테이블 */}
-          {loading ? <div className="flex justify-center p-4">로딩 중...</div> : renderPostTable()}
+          {loading ? (
+            <div className="flex justify-center p-4">로딩 중...</div>
+          ) : (
+            <PostTable
+              posts={posts}
+              searchQuery={searchQuery}
+              selectedTag={selectedTag}
+              setSelectedTag={setSelectedTag}
+              updateURL={updateURL}
+              openUserModal={openUserModal}
+              openPostDetail={openPostDetail}
+              deletePost={deletePost}
+              setSelectedPost={setSelectedPost}
+              setShowEditDialog={setShowEditDialog}
+            />
+          )}
 
           {/* 페이지네이션 */}
           <div className="flex justify-between items-center">
