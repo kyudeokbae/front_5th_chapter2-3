@@ -1,7 +1,0 @@
-export { Button } from "./button"
-export { Card, CardContent, CardHeader, CardTitle } from "./card"
-export { Dialog, DialogContent, DialogHeader, DialogTitle } from "./dialog"
-export { Input } from "./input"
-export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
-export { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table"
-export { Textarea } from "./textarea"
