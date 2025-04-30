@@ -9,12 +9,58 @@ export const PostTable = ({
   selectedTag,
   setSelectedTag,
   updateURL,
-  openUserModal,
-  openPostDetail,
-  deletePost,
   setSelectedPost,
   setShowEditDialog,
+  setPosts,
+  setShowPostDetailDialog,
+  comments,
+  setComments,
+  setSelectedUser,
+  setShowUserModal,
 }) => {
+  // 게시물 삭제
+  const deletePost = async (id) => {
+    try {
+      await fetch(`/api/posts/${id}`, {
+        method: "DELETE",
+      })
+      setPosts(posts.filter((post) => post.id !== id))
+    } catch (error) {
+      console.error("게시물 삭제 오류:", error)
+    }
+  }
+
+  // 댓글 가져오기
+  const fetchComments = async (postId) => {
+    if (comments[postId]) return // 이미 불러온 댓글이 있으면 다시 불러오지 않음
+    try {
+      const response = await fetch(`/api/comments/post/${postId}`)
+      const data = await response.json()
+      setComments((prev) => ({ ...prev, [postId]: data.comments }))
+    } catch (error) {
+      console.error("댓글 가져오기 오류:", error)
+    }
+  }
+
+  // 게시물 상세 보기
+  const openPostDetail = (post) => {
+    setSelectedPost(post)
+    fetchComments(post.id)
+    setShowPostDetailDialog(true)
+  }
+
+  // 사용자 모달 열기
+  const openUserModal = async (user) => {
+    try {
+      const response = await fetch(`/api/users/${user.id}`)
+      const userData = await response.json()
+      setSelectedUser(userData)
+      setShowUserModal(true)
+    } catch (error) {
+      console.error("사용자 정보 가져오기 오류:", error)
+    }
+  }
+
   return (
     <Table>
       <TableHeader>
