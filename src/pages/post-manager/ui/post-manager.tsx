@@ -1,15 +1,14 @@
 import { useEffect } from "react"
 
-import { AddPostDialog } from "@features/post"
+import { AddPostDialog, ModifyPostDialog } from "@/features/posts"
 
 import { Card, CardContent } from "@shared/ui"
 
-import { useCommentsStore, usePostsStore, useUserStore } from "../model"
+import { useCommentsStore, usePostManagerStore, useUserStore } from "../model"
 import { usePostManager } from "../model"
 import { AddCommentDialog } from "./add-comment-dialog"
 import { Header } from "./header"
 import { ModifyCommentDialog } from "./modify-comment-dialog"
-import { ModifyPostDialog } from "./modify-post-dialog"
 import { Pagination } from "./pagination"
 import { PostDetailDialog } from "./post-detail-dialog"
 import { PostTable } from "./post-table"
@@ -19,19 +18,7 @@ import { UserInfoDialog } from "./user-info-dialog"
 export const PostsManager = () => {
   const { fetchTags, loadPostsAndSyncUrl } = usePostManager()
 
-  const {
-    posts,
-    setPosts,
-    skip,
-    limit,
-    searchQuery,
-    selectedPost,
-    setSelectedPost,
-    loading,
-    selectedTag,
-    sortBy,
-    sortOrder,
-  } = usePostsStore()
+  const { skip, limit, searchQuery, selectedTag, sortBy, sortOrder, loading } = usePostManagerStore()
   const { comments, setComments, selectedComment, setSelectedComment, newComment, setNewComment } = useCommentsStore()
   const { selectedUser } = useUserStore()
 
@@ -65,15 +52,10 @@ export const PostsManager = () => {
       </CardContent>
 
       {/* 게시물 추가 대화상자 */}
-      <AddPostDialog posts={posts} setPosts={setPosts} />
+      <AddPostDialog />
 
       {/* 게시물 수정 대화상자 */}
-      <ModifyPostDialog
-        selectedPost={selectedPost}
-        setSelectedPost={setSelectedPost}
-        posts={posts}
-        setPosts={setPosts}
-      />
+      <ModifyPostDialog />
 
       {/* 댓글 추가 대화상자 */}
       <AddCommentDialog newComment={newComment} setNewComment={setNewComment} setComments={setComments} />
@@ -87,7 +69,6 @@ export const PostsManager = () => {
 
       {/* 게시물 상세 보기 대화상자 */}
       <PostDetailDialog
-        selectedPost={selectedPost}
         searchQuery={searchQuery}
         comments={comments}
         setNewComment={setNewComment}

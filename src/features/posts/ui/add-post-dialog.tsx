@@ -1,16 +1,13 @@
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Input, Textarea } from "@shared/ui"
 
-import { PostWithAuthor, useAddPost } from "../model"
-import { usePostModals } from "../model/store"
+import { useAddPost } from "../model"
+import { usePostsStore } from "../model/store"
 
-interface AddPostDialogProps {
-  posts: PostWithAuthor[]
-  setPosts: (posts: PostWithAuthor[]) => void
-}
-
-export const AddPostDialog = ({ posts, setPosts }: AddPostDialogProps) => {
-  const showAddDialog = usePostModals((state) => state.showAddDialog)
-  const setShowAddDialog = usePostModals((state) => state.setShowAddDialog)
+export const AddPostDialog = () => {
+  const posts = usePostsStore((state) => state.posts)
+  const setPosts = usePostsStore((state) => state.setPosts)
+  const showAddDialog = usePostsStore((state) => state.showAddDialog)
+  const setShowAddDialog = usePostsStore((state) => state.setShowAddDialog)
 
   const { addPost, changeTitle, changeBody, changeUserId, newPost } = useAddPost(posts, setPosts)
 

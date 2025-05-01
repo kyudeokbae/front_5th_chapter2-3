@@ -1,11 +1,11 @@
-import { usePostsStore } from "../store"
+import { usePostManagerStore } from "../store"
 
 export const usePagination = () => {
-  const limit = usePostsStore((state) => state.limit)
-  const setLimit = usePostsStore((state) => state.setLimit)
-  const skip = usePostsStore((state) => state.skip)
-  const setSkip = usePostsStore((state) => state.setSkip)
-  const total = usePostsStore((state) => state.total)
+  const limit = usePostManagerStore((state) => state.limit)
+  const setLimit = usePostManagerStore((state) => state.setLimit)
+  const skip = usePostManagerStore((state) => state.skip)
+  const setSkip = usePostManagerStore((state) => state.setSkip)
+  const total = usePostManagerStore((state) => state.total)
 
   const isDisableNext = skip + limit >= total
   const isDisablePrev = skip === 0

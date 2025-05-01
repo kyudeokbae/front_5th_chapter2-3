@@ -2,10 +2,10 @@ import { Plus } from "lucide-react"
 
 import { Button, CardHeader, CardTitle } from "@shared/ui"
 
-import { usePostModals } from "@/features/post"
+import { usePostsStore } from "@/features/posts"
 
 export const Header = () => {
-  const setShowAddDialog = usePostModals((state) => state.setShowAddDialog)
+  const setShowAddDialog = usePostsStore((state) => state.setShowAddDialog)
 
   return (
     <CardHeader>

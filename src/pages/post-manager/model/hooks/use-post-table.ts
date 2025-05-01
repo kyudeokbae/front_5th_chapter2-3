@@ -2,15 +2,16 @@ import { getPostComments } from "@entities/comment"
 import { deletePost } from "@entities/post"
 import { getUser, User } from "@entities/user"
 
-import { useCommentsStore, usePostManagerModals, usePostsStore, useUserStore } from "../store"
-import { PostWithAuthor } from "../types"
+import { useCommentsStore, usePostManagerModals, usePostManagerStore, useUserStore } from "../store"
 import { useUrlUpdater } from "./use-url-updater"
+
+import { PostWithAuthor, usePostsStore } from "@/features/posts"
 
 export const usePostTable = () => {
   const setPosts = usePostsStore((state) => state.setPosts)
   const posts = usePostsStore((state) => state.posts)
   const setSelectedPost = usePostsStore((state) => state.setSelectedPost)
-  const setSelectedTag = usePostsStore((state) => state.setSelectedTag)
+  const setSelectedTag = usePostManagerStore((state) => state.setSelectedTag)
   const setComments = useCommentsStore((state) => state.setComments)
   const comments = useCommentsStore((state) => state.comments)
 

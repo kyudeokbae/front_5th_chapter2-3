@@ -3,13 +3,15 @@ import { Edit2, MessageSquare, ThumbsDown, ThumbsUp, Trash2 } from "lucide-react
 import { highlightText } from "@shared/lib"
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/ui"
 
-import { usePostManagerModals, usePostsStore, usePostTable } from "../model"
+import { usePostManagerModals, usePostManagerStore, usePostTable } from "../model"
+
+import { usePostsStore } from "@/features/posts"
 
 export const PostTable = () => {
   const posts = usePostsStore((state) => state.posts)
-  const searchQuery = usePostsStore((state) => state.searchQuery)
-  const selectedTag = usePostsStore((state) => state.selectedTag)
   const setSelectedPost = usePostsStore((state) => state.setSelectedPost)
+  const searchQuery = usePostManagerStore((state) => state.searchQuery)
+  const selectedTag = usePostManagerStore((state) => state.selectedTag)
 
   const setShowEditDialog = usePostManagerModals((state) => state.setShowEditDialog)
 

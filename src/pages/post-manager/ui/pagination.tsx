@@ -1,9 +1,9 @@
 import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/ui"
 
-import { usePagination, usePostsStore } from "../model"
+import { usePagination, usePostManagerStore } from "../model"
 
 export const Pagination = () => {
-  const limit = usePostsStore((state) => state.limit)
+  const limit = usePostManagerStore((state) => state.limit)
 
   const { changeLimit, isDisableNext, isDisablePrev, next, prev } = usePagination()
 

@@ -2,10 +2,11 @@ import { Search } from "lucide-react"
 
 import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/ui"
 
-import { usePostsStore, useSearchPost } from "../model"
+import { usePostManagerStore, useSearchPost } from "../model"
 
 export const SearchFilterBar = () => {
-  const { searchQuery, setSearchQuery, selectedTag, tags, sortBy, setSortBy, sortOrder, setSortOrder } = usePostsStore()
+  const { searchQuery, setSearchQuery, selectedTag, tags, sortBy, setSortBy, sortOrder, setSortOrder } =
+    usePostManagerStore()
 
   const { searchPostsByQuery, searchPostsByTag } = useSearchPost()
 

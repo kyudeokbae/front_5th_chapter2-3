@@ -2,16 +2,18 @@ import { useCallback } from "react"
 
 import { searchPosts } from "@entities/post"
 
-import { usePostsStore } from "../store"
+import { usePostManagerStore } from "../store"
 import { usePostManager } from "./use-post-manager"
 import { useUrlUpdater } from "./use-url-updater"
 
+import { usePostsStore } from "@/features/posts"
+
 export const useSearchPost = () => {
-  const searchQuery = usePostsStore((state) => state.searchQuery)
+  const searchQuery = usePostManagerStore((state) => state.searchQuery)
   const setPosts = usePostsStore((state) => state.setPosts)
-  const setTotal = usePostsStore((state) => state.setTotal)
-  const setLoading = usePostsStore((state) => state.setLoading)
-  const setSelectedTag = usePostsStore((state) => state.setSelectedTag)
+  const setTotal = usePostManagerStore((state) => state.setTotal)
+  const setLoading = usePostManagerStore((state) => state.setLoading)
+  const setSelectedTag = usePostManagerStore((state) => state.setSelectedTag)
 
   const { fetchPosts, fetchPostsByTag } = usePostManager()
   const updateURL = useUrlUpdater()

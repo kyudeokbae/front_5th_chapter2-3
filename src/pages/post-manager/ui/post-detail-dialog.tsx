@@ -1,17 +1,13 @@
+import { usePostsStore } from "@/features/posts"
+
 import { highlightText } from "@shared/lib"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@shared/ui"
 
 import { usePostManagerModals } from "../model"
 import { Comments } from "./comments"
 
-export const PostDetailDialog = ({
-  selectedPost,
-  searchQuery,
-  comments,
-  setNewComment,
-  setSelectedComment,
-  setComments,
-}) => {
+export const PostDetailDialog = ({ searchQuery, comments, setNewComment, setSelectedComment, setComments }) => {
+  const selectedPost = usePostsStore((state) => state.selectedPost)
   const showPostDetailDialog = usePostManagerModals((state) => state.showPostDetailDialog)
   const setShowPostDetailDialog = usePostManagerModals((state) => state.setShowPostDetailDialog)
   const setShowAddCommentDialog = usePostManagerModals((state) => state.setShowAddCommentDialog)

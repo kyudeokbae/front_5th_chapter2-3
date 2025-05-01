@@ -2,12 +2,12 @@ import { useCallback, useState } from "react"
 
 import { createPost } from "@entities/post"
 
-import { usePostModals } from "../store"
+import { usePostsStore } from "../store"
 import { PostWithAuthor } from "../types"
 
 export const useAddPost = (posts: PostWithAuthor[], setPosts: (posts: PostWithAuthor[]) => void) => {
   const [newPost, setNewPost] = useState({ title: "", body: "", userId: 1 })
-  const setShowAddDialog = usePostModals((state) => state.setShowAddDialog)
+  const setShowAddDialog = usePostsStore((state) => state.setShowAddDialog)
 
   // 게시물 추가
   const addPost = useCallback(async () => {

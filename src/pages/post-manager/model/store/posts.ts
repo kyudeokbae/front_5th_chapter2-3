@@ -1,15 +1,10 @@
 import { create } from "zustand"
 
-import { Post } from "@entities/post"
 import { Tag } from "@entities/tag"
 
 import { SortBy, SortOrder } from "../types"
 
-import { PostWithAuthor } from "@/features/post"
-
 interface State {
-  posts: PostWithAuthor[]
-  selectedPost: Post | null
   total: number
   skip: number
   limit: number
@@ -22,8 +17,6 @@ interface State {
 }
 
 interface Action {
-  setPosts: (posts: PostWithAuthor[]) => void
-  setSelectedPost: (post: Post | null) => void
   setTotal: (total: number) => void
   setSkip: (skip: number) => void
   setLimit: (limit: number) => void
@@ -36,8 +29,6 @@ interface Action {
 }
 
 const initialState: State = {
-  posts: [],
-  selectedPost: null,
   total: 0,
   skip: 0,
   limit: 10,
@@ -49,10 +40,8 @@ const initialState: State = {
   selectedTag: null,
 }
 
-export const usePostsStore = create<State & Action>((set) => ({
+export const usePostManagerStore = create<State & Action>((set) => ({
   ...initialState,
-  setPosts: (posts) => set({ posts }),
-  setSelectedPost: (post) => set({ selectedPost: post }),
   setTotal: (total) => set({ total }),
   setSkip: (skip) => set({ skip }),
   setLimit: (limit) => set({ limit }),

@@ -1,16 +1,17 @@
 import { useCallback } from "react"
 
+import { usePostsStore } from "@/features/posts"
+
 import { getPostByTag, getPosts } from "@entities/post"
 import { getTags, Tag } from "@entities/tag"
 import { getUsers } from "@entities/user"
 
-import { usePostsStore } from "../store"
+import { usePostManagerStore } from "../store"
 import { SortBy, SortOrder } from "../types"
 import { useUrlUpdater } from "./use-url-updater"
 
 export const usePostManager = () => {
   const {
-    setPosts,
     setTotal,
     skip,
     setSkip,
@@ -23,7 +24,8 @@ export const usePostManager = () => {
     selectedTag,
     setSelectedTag,
     setTags,
-  } = usePostsStore()
+  } = usePostManagerStore()
+  const { setPosts } = usePostsStore()
 
   const updateURL = useUrlUpdater()
 
