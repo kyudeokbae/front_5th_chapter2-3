@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-import { AddPostDialog, ModifyPostDialog } from "@/features/posts"
+import { AddPostDialog, ModifyPostDialog } from "@features/posts"
 
 import { Card, CardContent } from "@shared/ui"
 

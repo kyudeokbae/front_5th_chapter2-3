@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 
-import { usePostsStore } from "@/features/posts"
+import { usePostsStore } from "@features/posts"
 
 import { getPostByTag, getPosts } from "@entities/post"
 import { getTags, Tag } from "@entities/tag"

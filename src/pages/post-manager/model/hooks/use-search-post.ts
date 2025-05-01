@@ -1,12 +1,12 @@
 import { useCallback } from "react"
 
+import { usePostsStore } from "@features/posts"
+
 import { searchPosts } from "@entities/post"
 
 import { usePostManagerStore } from "../store"
 import { usePostManager } from "./use-post-manager"
 import { useUrlUpdater } from "./use-url-updater"
-
-import { usePostsStore } from "@/features/posts"
 
 export const useSearchPost = () => {
   const searchQuery = usePostManagerStore((state) => state.searchQuery)

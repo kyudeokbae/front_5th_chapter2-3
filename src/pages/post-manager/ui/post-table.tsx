@@ -1,11 +1,11 @@
 import { Edit2, MessageSquare, ThumbsDown, ThumbsUp, Trash2 } from "lucide-react"
 
+import { usePostsStore } from "@features/posts"
+
 import { highlightText } from "@shared/lib"
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/ui"
 
 import { usePostManagerModals, usePostManagerStore, usePostTable } from "../model"
-
-import { usePostsStore } from "@/features/posts"
 
 export const PostTable = () => {
   const posts = usePostsStore((state) => state.posts)

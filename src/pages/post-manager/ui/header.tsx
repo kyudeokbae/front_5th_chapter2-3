@@ -1,8 +1,8 @@
 import { Plus } from "lucide-react"
 
-import { Button, CardHeader, CardTitle } from "@shared/ui"
+import { usePostsStore } from "@features/posts"
 
-import { usePostsStore } from "@/features/posts"
+import { Button, CardHeader, CardTitle } from "@shared/ui"
 
 export const Header = () => {
   const setShowAddDialog = usePostsStore((state) => state.setShowAddDialog)

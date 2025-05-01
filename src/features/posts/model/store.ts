@@ -1,8 +1,8 @@
 import { create } from "zustand"
 
-import { PostWithAuthor } from "./types"
+import { Post } from "@entities/post"
 
-import { Post } from "@/entities/post"
+import { PostWithAuthor } from "./types"
 
 interface State {
   posts: PostWithAuthor[]

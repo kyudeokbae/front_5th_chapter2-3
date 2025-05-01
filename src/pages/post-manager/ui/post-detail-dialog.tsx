@@ -1,4 +1,4 @@
-import { usePostsStore } from "@/features/posts"
+import { usePostsStore } from "@features/posts"
 
 import { highlightText } from "@shared/lib"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@shared/ui"
