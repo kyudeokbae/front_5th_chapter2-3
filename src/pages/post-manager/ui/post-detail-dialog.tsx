@@ -1,9 +1,8 @@
-import { Comments } from "@widgets/comments"
-
 import { highlightText } from "@shared/lib"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@shared/ui"
 
 import { usePostManagerModals } from "../model"
+import { Comments } from "./comments"
 
 export const PostDetailDialog = ({
   selectedPost,
