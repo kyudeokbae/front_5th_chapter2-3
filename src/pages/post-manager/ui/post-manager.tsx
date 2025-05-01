@@ -31,12 +31,11 @@ export const PostsManager = () => {
     setSelectedPost,
     loading,
     selectedTag,
-    setSelectedTag,
     sortBy,
     sortOrder,
   } = usePostsStore()
   const { comments, setComments, selectedComment, setSelectedComment, newComment, setNewComment } = useCommentsStore()
-  const { selectedUser, setSelectedUser } = useUserStore()
+  const { selectedUser } = useUserStore()
 
   useEffect(() => {
     fetchTags()
@@ -60,21 +59,7 @@ export const PostsManager = () => {
           <SearchFilterBar />
 
           {/* 게시물 테이블 */}
-          {loading ? (
-            <div className="flex justify-center p-4">로딩 중...</div>
-          ) : (
-            <PostTable
-              posts={posts}
-              searchQuery={searchQuery}
-              selectedTag={selectedTag}
-              setSelectedTag={setSelectedTag}
-              setSelectedPost={setSelectedPost}
-              setPosts={setPosts}
-              comments={comments}
-              setComments={setComments}
-              setSelectedUser={setSelectedUser}
-            />
-          )}
+          {loading ? <div className="flex justify-center p-4">로딩 중...</div> : <PostTable />}
 
           {/* 페이지네이션 */}
           <Pagination limit={limit} setLimit={setLimit} skip={skip} setSkip={setSkip} total={total} />

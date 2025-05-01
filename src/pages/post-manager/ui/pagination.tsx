@@ -1,4 +1,4 @@
-import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui"
+import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/ui"
 
 export const Pagination = ({ limit, setLimit, skip, setSkip, total }) => {
   return (

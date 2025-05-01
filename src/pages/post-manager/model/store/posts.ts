@@ -3,10 +3,10 @@ import { create } from "zustand"
 import { Post } from "@entities/post"
 import { Tag } from "@entities/tag"
 
-import { SortBy, SortOrder } from "../types"
+import { PostWithAuthor, SortBy, SortOrder } from "../types"
 
 interface State {
-  posts: Post[]
+  posts: PostWithAuthor[]
   selectedPost: Post | null
   total: number
   skip: number
@@ -20,7 +20,7 @@ interface State {
 }
 
 interface Action {
-  setPosts: (posts: Post[]) => void
+  setPosts: (posts: PostWithAuthor[]) => void
   setSelectedPost: (post: Post | null) => void
   setTotal: (total: number) => void
   setSkip: (skip: number) => void

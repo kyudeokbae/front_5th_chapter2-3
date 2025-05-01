@@ -1,69 +1,19 @@
 import { Edit2, MessageSquare, ThumbsDown, ThumbsUp, Trash2 } from "lucide-react"
 
-import { getPostComments } from "@entities/comment"
-import { deletePost } from "@entities/post"
-import { getUser } from "@entities/user"
-
 import { highlightText } from "@shared/lib"
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/ui"
 
-import { usePostManagerModals, useUrlUpdater } from "../model"
+import { usePostManagerModals, usePostsStore, usePostTable } from "../model"
 
-export const PostTable = ({
-  posts,
-  searchQuery,
-  selectedTag,
-  setSelectedTag,
-  setSelectedPost,
-  setPosts,
-  comments,
-  setComments,
-  setSelectedUser,
-}) => {
+export const PostTable = () => {
+  const posts = usePostsStore((state) => state.posts)
+  const searchQuery = usePostsStore((state) => state.searchQuery)
+  const selectedTag = usePostsStore((state) => state.selectedTag)
+  const setSelectedPost = usePostsStore((state) => state.setSelectedPost)
+
   const setShowEditDialog = usePostManagerModals((state) => state.setShowEditDialog)
-  const setShowPostDetailDialog = usePostManagerModals((state) => state.setShowPostDetailDialog)
-  const setShowUserModal = usePostManagerModals((state) => state.setShowUserModal)
 
-  const updateURL = useUrlUpdater()
-
-  // 게시물 삭제
-  const handleDeletePost = async (id) => {
-    try {
-      await deletePost(id)
-      setPosts(posts.filter((post) => post.id !== id))
-    } catch (error) {
-      console.error("게시물 삭제 오류:", error)
-    }
-  }
-
-  // 댓글 가져오기
-  const fetchComments = async (postId) => {
-    if (comments[postId]) return // 이미 불러온 댓글이 있으면 다시 불러오지 않음
-    try {
-      const data = await getPostComments(postId)
-      setComments((prev) => ({ ...prev, [postId]: data.comments }))
-    } catch (error) {
-      console.error("댓글 가져오기 오류:", error)
-    }
-  }
-
-  // 게시물 상세 보기
-  const openPostDetail = (post) => {
-    setSelectedPost(post)
-    fetchComments(post.id)
-    setShowPostDetailDialog(true)
-  }
-
-  // 사용자 모달 열기
-  const openUserModal = async (user) => {
-    try {
-      const userData = await getUser(user.id)
-      setSelectedUser(userData)
-      setShowUserModal(true)
-    } catch (error) {
-      console.error("사용자 정보 가져오기 오류:", error)
-    }
-  }
+  const { handleDeletePost, openPostDetail, openUserModal, updateTag } = usePostTable()
 
   return (
     <Table>
@@ -93,10 +43,7 @@ export const PostTable = ({
                           ? "text-white bg-blue-500 hover:bg-blue-600"
                           : "text-blue-800 bg-blue-100 hover:bg-blue-200"
                       }`}
-                      onClick={() => {
-                        setSelectedTag(tag)
-                        updateURL()
-                      }}
+                      onClick={() => updateTag(tag)}
                     >
                       {tag}
                     </span>
@@ -105,7 +52,7 @@ export const PostTable = ({
               </div>
             </TableCell>
             <TableCell>
-              <div className="flex items-center space-x-2 cursor-pointer" onClick={() => openUserModal(post.author)}>
+              <div className="flex items-center space-x-2 cursor-pointer" onClick={() => openUserModal(post?.author)}>
                 <img src={post.author?.image} alt={post.author?.username} className="w-8 h-8 rounded-full" />
                 <span>{post.author?.username}</span>
               </div>
