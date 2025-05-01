@@ -1,6 +1,11 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@shared/ui"
 
-export const UserInfoDialog = ({ showUserModal, setShowUserModal, selectedUser }) => {
+import { usePostManagerModals } from "../model"
+
+export const UserInfoDialog = ({ selectedUser }) => {
+  const showUserModal = usePostManagerModals((state) => state.showUserModal)
+  const setShowUserModal = usePostManagerModals((state) => state.setShowUserModal)
+
   return (
     <Dialog open={showUserModal} onOpenChange={setShowUserModal}>
       <DialogContent>

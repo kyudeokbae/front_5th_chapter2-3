@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { PostTable } from "@widgets/post-table"
-
 import { getPostByTag, getPosts, Post } from "@entities/post"
 import { getUsers, User } from "@entities/user"
 
@@ -15,6 +13,7 @@ import { ModifyCommentDialog } from "./modify-comment-dialog"
 import { ModifyPostDialog } from "./modify-post-dialog"
 import { Pagination } from "./pagination"
 import { PostDetailDialog } from "./post-detail-dialog"
+import { PostTable } from "./post-table"
 import { SearchFilterBar } from "./search-filter-bar"
 import { UserInfoDialog } from "./user-info-dialog"
 
@@ -34,8 +33,6 @@ export const PostsManager = () => {
   const [selectedPost, setSelectedPost] = useState(null)
   const [sortBy, setSortBy] = useState(queryParams.get("sortBy") || "")
   const [sortOrder, setSortOrder] = useState(queryParams.get("sortOrder") || "asc")
-  const [showAddDialog, setShowAddDialog] = useState(false)
-  const [showEditDialog, setShowEditDialog] = useState(false)
   const [newPost, setNewPost] = useState({ title: "", body: "", userId: 1 })
   const [loading, setLoading] = useState(false)
   const [tags, setTags] = useState<Tag[]>([])
@@ -43,10 +40,6 @@ export const PostsManager = () => {
   const [comments, setComments] = useState({})
   const [selectedComment, setSelectedComment] = useState(null)
   const [newComment, setNewComment] = useState({ body: "", postId: null, userId: 1 })
-  const [showAddCommentDialog, setShowAddCommentDialog] = useState(false)
-  const [showEditCommentDialog, setShowEditCommentDialog] = useState(false)
-  const [showPostDetailDialog, setShowPostDetailDialog] = useState(false)
-  const [showUserModal, setShowUserModal] = useState(false)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
   // URL 업데이트 함수
@@ -139,7 +132,7 @@ export const PostsManager = () => {
 
   return (
     <Card className="w-full max-w-6xl mx-auto">
-      <Header setShowAddDialog={setShowAddDialog} />
+      <Header />
 
       <CardContent>
         <div className="flex flex-col gap-4">
@@ -173,13 +166,10 @@ export const PostsManager = () => {
               setSelectedTag={setSelectedTag}
               updateURL={updateURL}
               setSelectedPost={setSelectedPost}
-              setShowEditDialog={setShowEditDialog}
               setPosts={setPosts}
-              setShowPostDetailDialog={setShowPostDetailDialog}
               comments={comments}
               setComments={setComments}
               setSelectedUser={setSelectedUser}
-              setShowUserModal={setShowUserModal}
             />
           )}
 
@@ -189,19 +179,10 @@ export const PostsManager = () => {
       </CardContent>
 
       {/* 게시물 추가 대화상자 */}
-      <AddPostDialog
-        showAddDialog={showAddDialog}
-        setShowAddDialog={setShowAddDialog}
-        newPost={newPost}
-        setNewPost={setNewPost}
-        posts={posts}
-        setPosts={setPosts}
-      />
+      <AddPostDialog newPost={newPost} setNewPost={setNewPost} posts={posts} setPosts={setPosts} />
 
       {/* 게시물 수정 대화상자 */}
       <ModifyPostDialog
-        showEditDialog={showEditDialog}
-        setShowEditDialog={setShowEditDialog}
         selectedPost={selectedPost}
         setSelectedPost={setSelectedPost}
         posts={posts}
@@ -209,18 +190,10 @@ export const PostsManager = () => {
       />
 
       {/* 댓글 추가 대화상자 */}
-      <AddCommentDialog
-        showAddCommentDialog={showAddCommentDialog}
-        setShowAddCommentDialog={setShowAddCommentDialog}
-        newComment={newComment}
-        setNewComment={setNewComment}
-        setComments={setComments}
-      />
+      <AddCommentDialog newComment={newComment} setNewComment={setNewComment} setComments={setComments} />
 
       {/* 댓글 수정 대화상자 */}
       <ModifyCommentDialog
-        showEditCommentDialog={showEditCommentDialog}
-        setShowEditCommentDialog={setShowEditCommentDialog}
         selectedComment={selectedComment}
         setSelectedComment={setSelectedComment}
         setComments={setComments}
@@ -228,20 +201,16 @@ export const PostsManager = () => {
 
       {/* 게시물 상세 보기 대화상자 */}
       <PostDetailDialog
-        showPostDetailDialog={showPostDetailDialog}
-        setShowPostDetailDialog={setShowPostDetailDialog}
         selectedPost={selectedPost}
         searchQuery={searchQuery}
         comments={comments}
         setNewComment={setNewComment}
-        setShowAddCommentDialog={setShowAddCommentDialog}
         setSelectedComment={setSelectedComment}
-        setShowEditCommentDialog={setShowEditCommentDialog}
         setComments={setComments}
       />
 
       {/* 사용자 모달 */}
-      <UserInfoDialog showUserModal={showUserModal} setShowUserModal={setShowUserModal} selectedUser={selectedUser} />
+      <UserInfoDialog selectedUser={selectedUser} />
     </Card>
   )
 }

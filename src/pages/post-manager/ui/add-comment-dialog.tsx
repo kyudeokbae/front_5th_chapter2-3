@@ -2,13 +2,12 @@ import { createComment } from "@entities/comment"
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Textarea } from "@shared/ui"
 
-export const AddCommentDialog = ({
-  showAddCommentDialog,
-  setShowAddCommentDialog,
-  newComment,
-  setNewComment,
-  setComments,
-}) => {
+import { usePostManagerModals } from "../model"
+
+export const AddCommentDialog = ({ newComment, setNewComment, setComments }) => {
+  const showAddCommentDialog = usePostManagerModals((state) => state.showAddCommentDialog)
+  const setShowAddCommentDialog = usePostManagerModals((state) => state.setShowAddCommentDialog)
+
   // 댓글 추가
   const addComment = async () => {
     try {

@@ -2,7 +2,12 @@ import { createPost } from "@entities/post"
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Input, Textarea } from "@shared/ui"
 
-export const AddPostDialog = ({ showAddDialog, setShowAddDialog, newPost, setNewPost, posts, setPosts }) => {
+import { usePostManagerModals } from "../model"
+
+export const AddPostDialog = ({ newPost, setNewPost, posts, setPosts }) => {
+  const showAddDialog = usePostManagerModals((state) => state.showAddDialog)
+  const setShowAddDialog = usePostManagerModals((state) => state.setShowAddDialog)
+
   // 게시물 추가
   const addPost = async () => {
     try {

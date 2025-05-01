@@ -1,9 +1,12 @@
 import { Plus } from "lucide-react"
-import { Dispatch, SetStateAction } from "react"
 
 import { Button, CardHeader, CardTitle } from "@shared/ui"
 
-export const Header = ({ setShowAddDialog }: { setShowAddDialog: Dispatch<SetStateAction<boolean>> }) => {
+import { usePostManagerModals } from "../model"
+
+export const Header = () => {
+  const setShowAddDialog = usePostManagerModals((state) => state.setShowAddDialog)
+
   return (
     <CardHeader>
       <CardTitle className="flex items-center justify-between">
