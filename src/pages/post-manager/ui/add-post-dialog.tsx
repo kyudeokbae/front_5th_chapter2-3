@@ -1,12 +1,16 @@
+import { useState } from "react"
+
 import { createPost } from "@entities/post"
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Input, Textarea } from "@shared/ui"
 
 import { usePostManagerModals } from "../model"
 
-export const AddPostDialog = ({ newPost, setNewPost, posts, setPosts }) => {
+export const AddPostDialog = ({ posts, setPosts }) => {
   const showAddDialog = usePostManagerModals((state) => state.showAddDialog)
   const setShowAddDialog = usePostManagerModals((state) => state.setShowAddDialog)
+
+  const [newPost, setNewPost] = useState({ title: "", body: "", userId: 1 })
 
   // 게시물 추가
   const addPost = async () => {

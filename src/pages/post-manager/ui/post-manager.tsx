@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { getPostByTag, getPosts, Post } from "@entities/post"
-import { getUsers, User } from "@entities/user"
+import { getPostByTag, getPosts } from "@entities/post"
+import { getTags, Tag } from "@entities/tag"
+import { getUsers } from "@entities/user"
 
 import { Card, CardContent } from "@shared/ui"
 
+import { useCommentsStore, usePostsStore, useUserStore } from "../model"
+import { SortBy, SortOrder } from "../model/types"
 import { AddCommentDialog } from "./add-comment-dialog"
 import { AddPostDialog } from "./add-post-dialog"
 import { Header } from "./header"
@@ -17,30 +20,35 @@ import { PostTable } from "./post-table"
 import { SearchFilterBar } from "./search-filter-bar"
 import { UserInfoDialog } from "./user-info-dialog"
 
-import { getTags, Tag } from "@/entities/tag"
-
 export const PostsManager = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
-
-  // 상태 관리
-  const [posts, setPosts] = useState<Post[]>([])
-  const [total, setTotal] = useState(0)
-  const [skip, setSkip] = useState(parseInt(queryParams.get("skip") || "0"))
-  const [limit, setLimit] = useState(parseInt(queryParams.get("limit") || "10"))
-  const [searchQuery, setSearchQuery] = useState(queryParams.get("search") || "")
-  const [selectedPost, setSelectedPost] = useState(null)
-  const [sortBy, setSortBy] = useState(queryParams.get("sortBy") || "")
-  const [sortOrder, setSortOrder] = useState(queryParams.get("sortOrder") || "asc")
-  const [newPost, setNewPost] = useState({ title: "", body: "", userId: 1 })
-  const [loading, setLoading] = useState(false)
-  const [tags, setTags] = useState<Tag[]>([])
-  const [selectedTag, setSelectedTag] = useState(queryParams.get("tag") || "")
-  const [comments, setComments] = useState({})
-  const [selectedComment, setSelectedComment] = useState(null)
-  const [newComment, setNewComment] = useState({ body: "", postId: null, userId: 1 })
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const {
+    posts,
+    setPosts,
+    total,
+    setTotal,
+    skip,
+    setSkip,
+    limit,
+    setLimit,
+    searchQuery,
+    setSearchQuery,
+    selectedPost,
+    setSelectedPost,
+    sortBy,
+    setSortBy,
+    sortOrder,
+    setSortOrder,
+    loading,
+    setLoading,
+    tags,
+    setTags,
+    selectedTag,
+    setSelectedTag,
+  } = usePostsStore()
+  const { comments, setComments, selectedComment, setSelectedComment, newComment, setNewComment } = useCommentsStore()
+  const { selectedUser, setSelectedUser } = useUserStore()
 
   // URL 업데이트 함수
   const updateURL = () => {
@@ -125,9 +133,9 @@ export const PostsManager = () => {
     setSkip(parseInt(params.get("skip") || "0"))
     setLimit(parseInt(params.get("limit") || "10"))
     setSearchQuery(params.get("search") || "")
-    setSortBy(params.get("sortBy") || "")
-    setSortOrder(params.get("sortOrder") || "asc")
-    setSelectedTag(params.get("tag") || "")
+    setSortBy((params.get("sortBy") as SortBy) || SortBy.NONE)
+    setSortOrder((params.get("sortOrder") as SortOrder) || SortOrder.ASC)
+    setSelectedTag((params.get("tag") as Tag["slug"]) || null)
   }, [location.search])
 
   return (
@@ -179,7 +187,7 @@ export const PostsManager = () => {
       </CardContent>
 
       {/* 게시물 추가 대화상자 */}
-      <AddPostDialog newPost={newPost} setNewPost={setNewPost} posts={posts} setPosts={setPosts} />
+      <AddPostDialog posts={posts} setPosts={setPosts} />
 
       {/* 게시물 수정 대화상자 */}
       <ModifyPostDialog
