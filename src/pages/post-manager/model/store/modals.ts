@@ -1,7 +1,6 @@
 import { create } from "zustand"
 
 interface State {
-  showAddDialog: boolean
   showEditDialog: boolean
   showAddCommentDialog: boolean
   showEditCommentDialog: boolean
@@ -10,7 +9,6 @@ interface State {
 }
 
 interface Action {
-  setShowAddDialog: (isShow: boolean) => void
   setShowEditDialog: (isShow: boolean) => void
   setShowAddCommentDialog: (isShow: boolean) => void
   setShowEditCommentDialog: (isShow: boolean) => void
@@ -19,7 +17,6 @@ interface Action {
 }
 
 const initialState: State = {
-  showAddDialog: false,
   showEditDialog: false,
   showAddCommentDialog: false,
   showEditCommentDialog: false,
@@ -29,7 +26,6 @@ const initialState: State = {
 
 export const usePostManagerModals = create<State & Action>((set) => ({
   ...initialState,
-  setShowAddDialog: (isShow) => set({ showAddDialog: isShow }),
   setShowEditDialog: (isShow) => set({ showEditDialog: isShow }),
   setShowAddCommentDialog: (isShow) => set({ showAddCommentDialog: isShow }),
   setShowEditCommentDialog: (isShow) => set({ showEditCommentDialog: isShow }),

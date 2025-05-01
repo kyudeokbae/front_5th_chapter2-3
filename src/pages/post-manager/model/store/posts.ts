@@ -3,7 +3,9 @@ import { create } from "zustand"
 import { Post } from "@entities/post"
 import { Tag } from "@entities/tag"
 
-import { PostWithAuthor, SortBy, SortOrder } from "../types"
+import { SortBy, SortOrder } from "../types"
+
+import { PostWithAuthor } from "@/features/post"
 
 interface State {
   posts: PostWithAuthor[]

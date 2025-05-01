@@ -1,6 +1,3 @@
-import { Post } from "@entities/post"
-import { User } from "@entities/user"
-
 export const SortBy = {
   NONE: "none",
   ID: "id",
@@ -16,7 +13,3 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-export interface PostWithAuthor extends Post {
-  author?: User
-}

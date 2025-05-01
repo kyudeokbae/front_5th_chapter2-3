@@ -1,11 +1,12 @@
 import { useEffect } from "react"
 
+import { AddPostDialog } from "@features/post"
+
 import { Card, CardContent } from "@shared/ui"
 
 import { useCommentsStore, usePostsStore, useUserStore } from "../model"
 import { usePostManager } from "../model"
 import { AddCommentDialog } from "./add-comment-dialog"
-import { AddPostDialog } from "./add-post-dialog"
 import { Header } from "./header"
 import { ModifyCommentDialog } from "./modify-comment-dialog"
 import { ModifyPostDialog } from "./modify-post-dialog"
