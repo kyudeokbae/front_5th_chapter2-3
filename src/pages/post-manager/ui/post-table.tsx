@@ -7,14 +7,13 @@ import { getUser } from "@entities/user"
 import { highlightText } from "@shared/lib"
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/ui"
 
-import { usePostManagerModals } from "../model"
+import { usePostManagerModals, useUrlUpdater } from "../model"
 
 export const PostTable = ({
   posts,
   searchQuery,
   selectedTag,
   setSelectedTag,
-  updateURL,
   setSelectedPost,
   setPosts,
   comments,
@@ -24,6 +23,8 @@ export const PostTable = ({
   const setShowEditDialog = usePostManagerModals((state) => state.setShowEditDialog)
   const setShowPostDetailDialog = usePostManagerModals((state) => state.setShowPostDetailDialog)
   const setShowUserModal = usePostManagerModals((state) => state.setShowUserModal)
+
+  const updateURL = useUrlUpdater()
 
   // 게시물 삭제
   const handleDeletePost = async (id) => {

@@ -1,42 +1,13 @@
 import { Search } from "lucide-react"
 
-import { searchPosts } from "@entities/post"
-
 import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/ui"
 
-export const SearchFilterBar = ({
-  searchQuery,
-  setSearchQuery,
-  selectedTag,
-  setSelectedTag,
-  fetchPostsByTag,
-  updateURL,
-  tags,
-  sortBy,
-  setSortBy,
-  sortOrder,
-  setSortOrder,
-  fetchPosts,
-  setPosts,
-  setLoading,
-  setTotal,
-}) => {
-  // 게시물 검색
-  const handleSearchPosts = async () => {
-    if (!searchQuery) {
-      fetchPosts()
-      return
-    }
-    setLoading(true)
-    try {
-      const data = await searchPosts(searchQuery)
-      setPosts(data.posts)
-      setTotal(data.total)
-    } catch (error) {
-      console.error("게시물 검색 오류:", error)
-    }
-    setLoading(false)
-  }
+import { usePostsStore, useSearchPost } from "../model"
+
+export const SearchFilterBar = () => {
+  const { searchQuery, setSearchQuery, selectedTag, tags, sortBy, setSortBy, sortOrder, setSortOrder } = usePostsStore()
+
+  const { searchPostsByQuery, searchPostsByTag } = useSearchPost()
 
   return (
     <div className="flex gap-4">
@@ -48,18 +19,11 @@ export const SearchFilterBar = ({
             className="pl-8"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSearchPosts()}
+            onKeyPress={(e) => e.key === "Enter" && searchPostsByQuery()}
           />
         </div>
       </div>
-      <Select
-        value={selectedTag}
-        onValueChange={(value) => {
-          setSelectedTag(value)
-          fetchPostsByTag(value)
-          updateURL()
-        }}
-      >
+      <Select value={selectedTag ?? "all"} onValueChange={searchPostsByTag}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="태그 선택" />
         </SelectTrigger>
