@@ -1,3 +1,4 @@
+export * from "./use-pagination"
 export * from "./use-post-manager"
 export * from "./use-post-table"
 export * from "./use-search-post"

@@ -15,6 +15,7 @@ export const useSearchPost = () => {
 
   const { fetchPosts, fetchPostsByTag } = usePostManager()
   const updateURL = useUrlUpdater()
+
   // 게시물 검색
   const searchPostsByQuery = useCallback(async () => {
     if (!searchQuery) {

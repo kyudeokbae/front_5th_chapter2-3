@@ -21,11 +21,8 @@ export const PostsManager = () => {
   const {
     posts,
     setPosts,
-    total,
     skip,
-    setSkip,
     limit,
-    setLimit,
     searchQuery,
     selectedPost,
     setSelectedPost,
@@ -62,7 +59,7 @@ export const PostsManager = () => {
           {loading ? <div className="flex justify-center p-4">로딩 중...</div> : <PostTable />}
 
           {/* 페이지네이션 */}
-          <Pagination limit={limit} setLimit={setLimit} skip={skip} setSkip={setSkip} total={total} />
+          <Pagination />
         </div>
       </CardContent>
 

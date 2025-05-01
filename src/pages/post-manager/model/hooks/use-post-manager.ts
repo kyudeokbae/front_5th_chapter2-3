@@ -23,7 +23,6 @@ export const usePostManager = () => {
     selectedTag,
     setSelectedTag,
     setTags,
-    loading,
   } = usePostsStore()
 
   const updateURL = useUrlUpdater()
@@ -84,15 +83,13 @@ export const usePostManager = () => {
   )
 
   const loadPostsAndSyncUrl = useCallback(() => {
-    if (loading) return
-
     if (selectedTag && selectedTag !== "all") {
       fetchPostsByTag(selectedTag)
     } else {
       fetchPosts()
     }
     updateURL()
-  }, [fetchPosts, fetchPostsByTag, selectedTag, updateURL, loading])
+  }, [fetchPosts, fetchPostsByTag, selectedTag, updateURL])
 
   const syncStateWithUrlParams = useCallback(() => {
     const params = new URLSearchParams(location.search)
