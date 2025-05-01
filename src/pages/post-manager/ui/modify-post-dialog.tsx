@@ -1,3 +1,5 @@
+import { updatePost } from "@entities/post"
+
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Input, Textarea } from "@shared/ui"
 
 export const ModifyPostDialog = ({
@@ -9,14 +11,9 @@ export const ModifyPostDialog = ({
   setPosts,
 }) => {
   // 게시물 업데이트
-  const updatePost = async () => {
+  const handleUpdatePost = async () => {
     try {
-      const response = await fetch(`/api/posts/${selectedPost.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(selectedPost),
-      })
-      const data = await response.json()
+      const data = await updatePost(selectedPost)
       setPosts(posts.map((post) => (post.id === data.id ? data : post)))
       setShowEditDialog(false)
     } catch (error) {
@@ -42,7 +39,7 @@ export const ModifyPostDialog = ({
             value={selectedPost?.body || ""}
             onChange={(e) => setSelectedPost({ ...selectedPost, body: e.target.value })}
           />
-          <Button onClick={updatePost}>게시물 업데이트</Button>
+          <Button onClick={handleUpdatePost}>게시물 업데이트</Button>
         </div>
       </DialogContent>
     </Dialog>

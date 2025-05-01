@@ -1,3 +1,5 @@
+import { updateComment } from "@entities/comment"
+
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Textarea } from "@shared/ui"
 
 export const ModifyCommentDialog = ({
@@ -8,14 +10,9 @@ export const ModifyCommentDialog = ({
   setComments,
 }) => {
   // 댓글 업데이트
-  const updateComment = async () => {
+  const handleUpdateComment = async () => {
     try {
-      const response = await fetch(`/api/comments/${selectedComment.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ body: selectedComment.body }),
-      })
-      const data = await response.json()
+      const data = await updateComment(selectedComment)
       setComments((prev) => ({
         ...prev,
         [data.postId]: prev[data.postId].map((comment) => (comment.id === data.id ? data : comment)),
@@ -38,7 +35,7 @@ export const ModifyCommentDialog = ({
             value={selectedComment?.body || ""}
             onChange={(e) => setSelectedComment({ ...selectedComment, body: e.target.value })}
           />
-          <Button onClick={updateComment}>댓글 업데이트</Button>
+          <Button onClick={handleUpdateComment}>댓글 업데이트</Button>
         </div>
       </DialogContent>
     </Dialog>

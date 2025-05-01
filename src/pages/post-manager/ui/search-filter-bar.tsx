@@ -1,5 +1,7 @@
 import { Search } from "lucide-react"
 
+import { searchPosts } from "@entities/post"
+
 import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/ui"
 
 export const SearchFilterBar = ({
@@ -20,15 +22,14 @@ export const SearchFilterBar = ({
   setTotal,
 }) => {
   // 게시물 검색
-  const searchPosts = async () => {
+  const handleSearchPosts = async () => {
     if (!searchQuery) {
       fetchPosts()
       return
     }
     setLoading(true)
     try {
-      const response = await fetch(`/api/posts/search?q=${searchQuery}`)
-      const data = await response.json()
+      const data = await searchPosts(searchQuery)
       setPosts(data.posts)
       setTotal(data.total)
     } catch (error) {
@@ -47,7 +48,7 @@ export const SearchFilterBar = ({
             className="pl-8"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && searchPosts()}
+            onKeyPress={(e) => e.key === "Enter" && handleSearchPosts()}
           />
         </div>
       </div>

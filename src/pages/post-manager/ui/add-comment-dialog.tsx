@@ -1,3 +1,5 @@
+import { createComment } from "@entities/comment"
+
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Textarea } from "@shared/ui"
 
 export const AddCommentDialog = ({
@@ -10,12 +12,7 @@ export const AddCommentDialog = ({
   // 댓글 추가
   const addComment = async () => {
     try {
-      const response = await fetch("/api/comments/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newComment),
-      })
-      const data = await response.json()
+      const data = await createComment(newComment)
       setComments((prev) => ({
         ...prev,
         [data.postId]: [...(prev[data.postId] || []), data],

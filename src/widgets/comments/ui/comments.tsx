@@ -1,5 +1,7 @@
 import { Edit2, Plus, ThumbsUp, Trash2 } from "lucide-react"
 
+import { deleteComment, patchCommentLikes } from "@entities/comment"
+
 import { highlightText } from "@shared/lib"
 import { Button } from "@shared/ui"
 
@@ -14,11 +16,9 @@ export const Comments = ({
   setComments,
 }) => {
   // 댓글 삭제
-  const deleteComment = async (id, postId) => {
+  const handleDeleteComment = async (id, postId) => {
     try {
-      await fetch(`/api/comments/${id}`, {
-        method: "DELETE",
-      })
+      await deleteComment(id)
       setComments((prev) => ({
         ...prev,
         [postId]: prev[postId].filter((comment) => comment.id !== id),
@@ -31,12 +31,8 @@ export const Comments = ({
   // 댓글 좋아요
   const likeComment = async (id, postId) => {
     try {
-      const response = await fetch(`/api/comments/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ likes: comments[postId].find((c) => c.id === id).likes + 1 }),
-      })
-      const data = await response.json()
+      const likes = comments[postId].find((c) => c.id === id).likes + 1
+      const data = await patchCommentLikes(id, likes)
       setComments((prev) => ({
         ...prev,
         [postId]: prev[postId].map((comment) =>
@@ -85,7 +81,7 @@ export const Comments = ({
               >
                 <Edit2 className="w-3 h-3" />
               </Button>
-              <Button variant="ghost" size="sm" onClick={() => deleteComment(comment.id, postId)}>
+              <Button variant="ghost" size="sm" onClick={() => handleDeleteComment(comment.id, postId)}>
                 <Trash2 className="w-3 h-3" />
               </Button>
             </div>
