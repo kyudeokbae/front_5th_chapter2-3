@@ -16,7 +16,7 @@ import { SearchFilterBar } from "./search-filter-bar"
 import { UserInfoDialog } from "./user-info-dialog"
 
 export const PostsManager = () => {
-  const { fetchTags, loadPostsAndSyncUrl } = usePostManager()
+  const { fetchTags, loadPostsAndSyncUrl, syncStateWithUrlParams } = usePostManager()
 
   const { skip, limit, searchQuery, selectedTag, sortBy, sortOrder, loading } = usePostManagerStore()
   const { comments, setComments, selectedComment, setSelectedComment, newComment, setNewComment } = useCommentsStore()
@@ -31,7 +31,7 @@ export const PostsManager = () => {
   }, [skip, limit, sortBy, sortOrder, selectedTag])
 
   useEffect(() => {
-    loadPostsAndSyncUrl()
+    syncStateWithUrlParams()
   }, [location.search])
 
   return (
